@@ -6,10 +6,10 @@ Partindo desse problema, busquei diversos métodos na internet até chegar nessa
 
 ### Começando (Get Started!)
 
-Para poder usar o arquivo é necessário qualquer servidor PHP (existem diversos como o [WAMP](http://www.wampserver.com), [XAMPP](https://www.apachefriends.org/), [EasyPHP](http://www.easyphp.org) denre outros). Para "instalar" o serviço do webservice basta jogar este arquivo dentro da pasta raiz (ou outra que você preferir) do seu servidor. Após isso o serviço já estará disponível acessando a url do seu servidor/consultaNFE.php como no exemplo:
+Para poder usar o arquivo é necessário qualquer servidor PHP (existem diversos como o [WAMP](http://www.wampserver.com), [XAMPP](https://www.apachefriends.org/), [EasyPHP](http://www.easyphp.org) dentre outros). Para "instalar" o serviço do webservice basta jogar este arquivo dentro da pasta raiz (ou outra que você preferir) do seu servidor. Após isso o serviço já estará disponível acessando a url do seu servidor/consultaNFE.php como no exemplo:
 
 ```
 http://localhost/consultaNFE.php
 ```
 
-**NOTA:** como a aplicação retorna o mime-type JSONP, não é necessário CORS para acessá-la.
+E é só! =D
