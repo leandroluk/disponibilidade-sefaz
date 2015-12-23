@@ -1,16 +1,34 @@
 <?php
-/*! Criado por Leandro Santiago Gomes em 12/2015. Creative Commons license - usem sem moderação! */
+
+header('content-type: application/json; charset=utf-8');
+
+function is_valid_callback($subject) {
+    $identifier_syntax = '/^[$_\p{L}][$_\p{L}\p{Mn}\p{Mc}\p{Nd}\p{Pc}\x{200C}\x{200D}]*+$/u';
+
+    $reserved_words = array('break', 'do', 'instanceof', 'typeof', 'case',
+        'else', 'new', 'var', 'catch', 'finally', 'return', 'void', 'continue',
+        'for', 'switch', 'while', 'debugger', 'function', 'this', 'with',
+        'default', 'if', 'throw', 'delete', 'in', 'try', 'class', 'enum',
+        'extends', 'super', 'const', 'export', 'import', 'implements', 'let',
+        'private', 'public', 'yield', 'interface', 'package', 'protected',
+        'static', 'null', 'true', 'false');
+
+    return preg_match($identifier_syntax, $subject) && !in_array(mb_strtolower($subject, 'UTF-8'), $reserved_words);
+}
+
+;
+
 $get = curl_init();
 curl_setopt($get, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($get, CURLOPT_URL, 'http://www.nfe.fazenda.gov.br/portal/disponibilidade.aspx');
 $html = curl_exec($get);
 curl_close($get);
-
 $dom = new DOMDocument;
 $dom->loadHTML($html);
-
-$response = array('ultimaVerificacao' => '','webservices' => array());
-
+$response = array(
+    'ultimaVerificacao' => '',
+    'webservices' => array()
+);
 $table = $dom->getElementsByTagName('table')->item(1)->childNodes;
 foreach ($table as $tableNode) {
     if ($tableNode->tagName == 'caption') {
@@ -69,9 +87,17 @@ foreach ($table as $tableNode) {
         $response['webservices'][$keyName] = $array;
     };
 };
-//return response
-header('Content-type: application/jsonp; charset=utf-8');
-echo json_encode($response);
+$json = json_encode($response);
 
+# JSON if no callback
+if( ! isset($_GET['callback']))
+    exit($json);
+
+# JSONP if valid callback
+if(is_valid_callback($_GET['callback']))
+    exit("{$_GET['callback']}($json)");
+
+# Otherwise, bad request
+header('status: 400 Bad Request', true, 400);
 ?>
 
