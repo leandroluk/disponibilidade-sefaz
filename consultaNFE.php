@@ -53,8 +53,8 @@ foreach ($table as $tableNode) {
             if ($trNode->nodeName == 'td') {
                 if (strlen($trNode->nodeValue) != 0) {
                     if ($i == 0) {
-                        //autorizadorutorizador
-                        $keyName = $trNode->nodeValue;
+                        //autorizador
+                        $keyName = str_replace('-r','R',str_replace('-a','A',strtolower($trNode->nodeValue)));
                     } else {
                         //tempoMedio
                         $array[$paramNames[$i - 1]] = $trNode->nodeValue;
