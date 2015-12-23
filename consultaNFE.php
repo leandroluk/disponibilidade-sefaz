@@ -1,5 +1,5 @@
 <?php
-
+/*! Criado por Leandro Santiago Gomes em 12/2015. Creative Commons license - usem sem moderação! */
 $get = curl_init();
 curl_setopt($get, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($get, CURLOPT_URL, 'http://www.nfe.fazenda.gov.br/portal/disponibilidade.aspx');
